@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AuraCRM | Advanced Marketing & Customer 360 Dashboard</title>
+    <meta name="description"
+        content="A premium, glassmorphic CRM and Marketing Analytics Dashboard featuring Customer 360, Leads Pipeline, and Departmental Marketing Spends.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <!-- CSS Stylesheet -->
+    <link rel="stylesheet" href="/static/style.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <div class="brand-icon">
+                    <i data-lucide="activity" class="icon-brand"></i>
+                </div>
+                <span class="brand-name">AuraCRM</span>
+            </div>
+
+            <nav class="sidebar-nav">
+                <ul>
+                    <li>
+                        <a href="#" class="nav-link active" data-tab="dashboard" id="nav-dashboard">
+                            <i data-lucide="layout-dashboard"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link" data-tab="customer360" id="nav-customer360">
+                            <i data-lucide="users"></i>
+                            <span>Customer 360</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link" data-tab="leads" id="nav-leads">
+                            <i data-lucide="git-pull-request"></i>
+                            <span>Leads Pipeline</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link" data-tab="spends" id="nav-spends">
+                            <i data-lucide="pie-chart"></i>
+                            <span>Marketing Spends</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="theme-toggle-container">
+                    <span class="theme-label">Dark Mode</span>
+                    <button class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle Theme">
+                        <div class="toggle-slider"></div>
+                    </button>
+                </div>
+                <div class="user-profile-summary">
+                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100" alt="User Profile"
+                        class="user-avatar">
+                    <div class="user-info">
+                        <span class="user-name">BHA</span>
+                        <span class="user-role">Marketing Director</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="main-header">
+                <div class="header-title-area">
+                    <h1 id="page-title">Dashboard Overview</h1>
+                    <p class="header-subtitle" id="page-subtitle">Real-time marketing performance and customer insights.
+                    </p>
+                </div>
+                <div class="header-actions">
+                    <div class="date-badge">
+                        <i data-lucide="calendar"></i>
+                        <span id="current-date">August 17, 2026</span>
+                    </div>
+                    <button class="btn btn-primary" id="btn-quick-lead">
+                        <i data-lucide="plus"></i>
+                        <span>New Lead</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Stats Grid -->
+            <section class="stats-grid" id="stats-grid">
+                <div class="stat-card glass-card">
+                    <div class="stat-icon-wrapper rev-icon">
+                        <i data-lucide="banknote"></i>
+                    </div>
+                    <div class="stat-data">
+                        <span class="stat-label">Realised Revenue</span>
+                        <h2 class="stat-value" id="stat-revenue">AED 0.00</h2>
+                        <span class="stat-trend stat-period">—</span>
+                    </div>
+                </div>
+                <div class="stat-card glass-card">
+                    <div class="stat-icon-wrapper leads-icon">
+                        <i data-lucide="user-check"></i>
+                    </div>
+                    <div class="stat-data">
+                        <span class="stat-label">Active Leads</span>
+                        <h2 class="stat-value" id="stat-leads">0</h2>
+                        <span class="stat-trend trend-up">
+                            <i data-lucide="trending-up"></i> +8.2% vs last week
+                        </span>
+                    </div>
+                </div>
+                <div class="stat-card glass-card">
+                    <div class="stat-icon-wrapper spend-icon">
+                        <i data-lucide="credit-card"></i>
+                    </div>
+                    <div class="stat-data">
+                        <span class="stat-label">Marketing Spend</span>
+                        <h2 class="stat-value" id="stat-spend">AED 0.00</h2>
+                        <span class="stat-trend stat-period">—</span>
+                    </div>
+                </div>
+                <div class="stat-card glass-card">
+                    <div class="stat-icon-wrapper conv-icon">
+                        <i data-lucide="percent"></i>
+                    </div>
+                    <div class="stat-data">
+                        <span class="stat-label">Lead Win Rate</span>
+                        <h2 class="stat-value" id="stat-conversion">0.0%</h2>
+                        <span class="stat-trend">Won leads / all leads</span>
+                    </div>
+                </div>
+                <div class="stat-card glass-card">
+                    <div class="stat-icon-wrapper roas-icon">
+                        <i data-lucide="target"></i>
+                    </div>
+                    <div class="stat-data">
+                        <span class="stat-label">Blended ROAS</span>
+                        <h2 class="stat-value" id="stat-roas">—</h2>
+                        <span class="stat-trend">Revenue per AED spent</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tab Contents -->
+            <div class="tab-container">
+
+                <!-- DASHBOARD TAB -->
+                <div class="tab-content active" id="tab-dashboard">
+                    <div class="dashboard-layout">
+                        <!-- Chart Section -->
+                        <div class="chart-row">
+                            <div class="chart-card glass-card col-8">
+                                <div class="card-header">
+                                    <h3>Revenue vs. Marketing Spend Trend</h3>
+                                    <span class="card-subtitle">Monthly comparison of marketing efficiency</span>
+                                </div>
+                                <div class="chart-container">
+                                    <canvas id="revenueSpendChart"></canvas>
+                                </div>
+                            </div>
+                            <div class="chart-card glass-card col-4">
+                                <div class="card-header">
+                                    <h3>Lead Conversion Funnel</h3>
+                                    <span class="card-subtitle">Conversion rate through pipeline stages</span>
+                                </div>
+                                <div class="chart-container">
+                                    <canvas id="funnelChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bottom Row -->
+                        <div class="dashboard-row-bottom">
+                            <!-- Recent Leads -->
+                            <div class="table-card glass-card col-6">
+                                <div class="card-header">
+                                    <h3>High-Score Leads</h3>
+                                    <button class="btn btn-text" onclick="switchTab('leads')">View All Leads <i
+                                            data-lucide="arrow-right"></i></button>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="data-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Lead Name</th>
+                                                <th>Company</th>
+                                                <th>Phone</th>
+                                                <th>Value</th>
+                                                <th>Score</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="dashboard-leads-tbody">
+                                            <!-- Dynamic content -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- Top Customers -->
+                            <div class="table-card glass-card col-6">
+                                <div class="card-header">
+                                    <h3>Top Customers (LTV)</h3>
+                                    <button class="btn btn-text" onclick="switchTab('customer360')">View Customer 360 <i
+                                            data-lucide="arrow-right"></i></button>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="data-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Customer</th>
+                                                <th>Company</th>
+                                                <th>Acquisition Channel</th>
+                                                <th>LTV</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="dashboard-customers-tbody">
+                                            <!-- Dynamic content -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CUSTOMER 360 TAB -->
+                <div class="tab-content" id="tab-customer360">
+                    <div class="customer360-layout">
+                        <!-- Left Panel: Search & List -->
+                        <div class="customer-list-panel glass-card">
+                            <div class="panel-header">
+                                <div class="search-box">
+                                    <i data-lucide="search"></i>
+                                    <input type="text" id="customer-search"
+                                        placeholder="Search customers by name, company...">
+                                </div>
+                            </div>
+                            <div class="customer-list" id="customer-list-container">
+                                <!-- Dynamic Customer Cards -->
+                            </div>
+                        </div>
+
+                        <!-- Right Panel: Customer 360 Profile -->
+                        <div class="customer-detail-panel glass-card" id="customer-detail-container">
+                            <div class="empty-detail-state">
+                                <i data-lucide="user" class="large-icon"></i>
+                                <h3>Select a customer to view Customer 360 Profile</h3>
+                                <p>Get a comprehensive view of interactions, purchases, campaigns, and metrics.</p>
+                            </div>
+                            <!-- Dynamic Customer Detail Content will be injected here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LEADS PIPELINE TAB -->
+                <div class="tab-content" id="tab-leads">
+                    <div class="leads-pipeline-header">
+                        <div class="pipeline-filters">
+                            <span class="filter-label">Sort by:</span>
+                            <select id="lead-sort" class="select-input">
+                                <option value="score">Lead Score (High to Low)</option>
+                                <option value="value">Deal Value (High to Low)</option>
+                                <option value="date">Created Date</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Kanban Board -->
+                    <div class="kanban-board">
+                        <!-- New -->
+                        <div class="kanban-column" data-status="New">
+                            <div class="column-header">
+                                <span class="column-title">New</span>
+                                <span class="column-count badge" id="count-new">0</span>
+                            </div>
+                            <div class="kanban-cards" id="cards-new"></div>
+                        </div>
+                        <!-- Contacted -->
+                        <div class="kanban-column" data-status="Contacted">
+                            <div class="column-header">
+                                <span class="column-title">Contacted</span>
+                                <span class="column-count badge" id="count-contacted">0</span>
+                            </div>
+                            <div class="kanban-cards" id="cards-contacted"></div>
+                        </div>
+                        <!-- Qualified -->
+                        <div class="kanban-column" data-status="Qualified">
+                            <div class="column-header">
+                                <span class="column-title">Qualified</span>
+                                <span class="column-count badge" id="count-qualified">0</span>
+                            </div>
+                            <div class="kanban-cards" id="cards-qualified"></div>
+                        </div>
+                        <!-- Proposal -->
+                        <div class="kanban-column" data-status="Proposal">
+                            <div class="column-header">
+                                <span class="column-title">Proposal</span>
+                                <span class="column-count badge" id="count-proposal">0</span>
+                            </div>
+                            <div class="kanban-cards" id="cards-proposal"></div>
+                        </div>
+                        <!-- Won -->
+                        <div class="kanban-column column-won" data-status="Won">
+                            <div class="column-header">
+                                <span class="column-title">Won</span>
+                                <span class="column-count badge" id="count-won">0</span>
+                            </div>
+                            <div class="kanban-cards" id="cards-won"></div>
+                        </div>
+                        <!-- Lost -->
+                        <div class="kanban-column column-lost" data-status="Lost">
+                            <div class="column-header">
+                                <span class="column-title">Lost</span>
+                                <span class="column-count badge" id="count-lost">0</span>
+                            </div>
+                            <div class="kanban-cards" id="cards-lost"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MARKETING SPENDS TAB -->
+                <div class="tab-content" id="tab-spends">
+                    <div class="spends-layout">
+                        <!-- Top Row: Charts -->
+                        <div class="chart-row">
+                            <div class="chart-card glass-card col-6">
+                                <div class="card-header">
+                                    <h3>Spend Breakdown by Department</h3>
+                                    <span class="card-subtitle">Current budget utilization across channels</span>
+                                </div>
+                                <div class="chart-container">
+                                    <canvas id="spendDeptChart"></canvas>
+                                </div>
+                            </div>
+                            <div class="chart-card glass-card col-6">
+                                <div class="card-header">
+                                    <h3>ROAS by Marketing Channel</h3>
+                                    <span class="card-subtitle">Revenue per AED spent — red is below 1.00x break-even</span>
+                                </div>
+                                <div class="chart-container">
+                                    <canvas id="roiDeptChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bottom Row: Table & Simulator -->
+                        <div class="spends-bottom-row">
+                            <!-- Budget Table -->
+                            <div class="table-card glass-card col-7">
+                                <div class="card-header">
+                                    <h3>Channel Performance</h3>
+                                    <span class="card-subtitle">
+                                        Budget and spend are authored; every other column is derived from
+                                        leads, customers and purchases in
+                                        <strong id="spends-period-label">—</strong>
+                                    </span>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="data-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Department</th>
+                                                <th>Budget</th>
+                                                <th>Spent</th>
+                                                <th title="Spent as a share of budget">Util.</th>
+                                                <th title="Spend rate vs. time elapsed. 1.00x is exactly on plan; above that is pacing to overspend.">Pace</th>
+                                                <th>Leads</th>
+                                                <th title="Customers acquired and attributed to this channel">Cust.</th>
+                                                <th title="Cost per lead">CPL</th>
+                                                <th title="Cost per acquired customer">CAC</th>
+                                                <th title="Customers acquired / leads generated">Win %</th>
+                                                <th title="Realised purchase revenue attributed to this channel">Revenue</th>
+                                                <th title="Revenue per AED spent. Below 1.00x is losing money.">ROAS</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="spends-table-tbody">
+                                            <!-- Dynamic content -->
+                                        </tbody>
+                                        <tfoot id="spends-table-tfoot">
+                                            <!-- Totals row -->
+                                        </tfoot>
+                                    </table>
+                                </div>
+                                <p class="table-note" id="spends-unattributed"></p>
+                            </div>
+
+                            <!-- Campaign Drilldown -->
+                            <div class="table-card glass-card col-7">
+                                <div class="card-header">
+                                    <h3>Campaign Performance</h3>
+                                    <span class="card-subtitle">
+                                        Individual campaigns beneath each channel. Revenue is credited only
+                                        where engagement reached <strong>Converted</strong>.
+                                    </span>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="data-table" id="campaigns-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Campaign</th>
+                                                <th>Channel</th>
+                                                <th>Budget</th>
+                                                <th title="Customers this campaign touched">Reached</th>
+                                                <th title="Engagement funnel: ignored / opened / clicked / registered / converted">Engagement</th>
+                                                <th>Conv.</th>
+                                                <th title="Conversions / customers reached">Conv. Rate</th>
+                                                <th title="Campaign budget per conversion">Cost/Conv.</th>
+                                                <th>Revenue</th>
+                                                <th title="Revenue per AED of campaign budget">ROAS</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="campaigns-table-tbody">
+                                            <!-- Dynamic content -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- Budget Simulator -->
+                            <div class="simulator-card glass-card col-5">
+                                <div class="card-header">
+                                    <h3>Budget Optimization Simulator</h3>
+                                    <span class="card-subtitle">
+                                        Projections use a diminishing-returns curve fitted to each channel's
+                                        own history — doubling a budget does not double its return.
+                                    </span>
+                                </div>
+                                <div class="simulator-body">
+                                    <div class="simulator-sliders" id="simulator-sliders-container">
+                                        <!-- Dynamic sliders -->
+                                    </div>
+                                    <div class="simulator-results">
+                                        <div class="sim-result-item">
+                                            <span class="sim-result-label">Total Simulated Budget</span>
+                                            <span class="sim-result-value" id="sim-total-budget">AED 0</span>
+                                        </div>
+                                        <div class="sim-result-item highlight">
+                                            <span class="sim-result-label">Projected Leads</span>
+                                            <span class="sim-result-value" id="sim-projected-leads">0</span>
+                                        </div>
+                                        <div class="sim-result-item highlight-alt">
+                                            <span class="sim-result-label">Projected Revenue</span>
+                                            <span class="sim-result-value" id="sim-projected-revenue">AED 0</span>
+                                        </div>
+                                    </div>
+                                    <p class="table-note" id="sim-note"></p>
+
+                                    <div class="simulator-actions">
+                                        <button class="btn btn-primary" id="btn-optimize">
+                                            <i data-lucide="wand-2"></i> Recommend allocation
+                                        </button>
+                                        <button class="btn btn-secondary" id="btn-reset-simulator">
+                                            <i data-lucide="refresh-cw"></i> Reset
+                                        </button>
+                                    </div>
+
+                                    <!-- Optimizer output -->
+                                    <div class="optimizer-panel" id="optimizer-panel" hidden>
+                                        <div class="optimizer-summary" id="optimizer-summary"></div>
+                                        <div class="table-responsive">
+                                            <table class="data-table" id="optimizer-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Channel</th>
+                                                        <th>Current</th>
+                                                        <th>Recommended</th>
+                                                        <th>Change</th>
+                                                        <th>Proj. Revenue</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="optimizer-tbody"></tbody>
+                                            </table>
+                                        </div>
+                                        <p class="table-note" id="optimizer-note"></p>
+                                        <button class="btn btn-secondary btn-full" id="btn-apply-optimizer">
+                                            <i data-lucide="check"></i> Load into sliders
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <!-- Add Lead Modal -->
+    <div class="modal-backdrop" id="modal-add-lead">
+        <div class="modal-card glass-card">
+            <div class="modal-header">
+                <h2>Create New Lead</h2>
+                <button class="btn-close" id="btn-close-lead-modal">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+            <form id="form-add-lead" class="modal-form">
+                <div class="form-group">
+                    <label for="lead-name">Contact Name</label>
+                    <input type="text" id="lead-name" required placeholder="e.g. John Doe">
+                </div>
+                <div class="form-group">
+                    <label for="lead-email">Email Address</label>
+                    <input type="email" id="lead-email" required placeholder="e.g. john@company.com">
+                </div>
+                <div class="form-group">
+                    <label for="lead-company">Company</label>
+                    <input type="text" id="lead-company" required placeholder="e.g. Acme Corp">
+                </div>
+                <div class="form-group">
+                    <label for="lead-phone">Phone</label>
+                    <input type="text" id="lead-phone" required placeholder="050">
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-6">
+                        <label for="lead-value">Deal Value (AED)</label>
+                        <input type="number" id="lead-value" required min="0" placeholder="e.g. 15000">
+                    </div>
+                    <div class="form-group col-6">
+                        <label for="lead-score">Lead Score (0-100)</label>
+                        <input type="number" id="lead-score" required min="0" max="100" value="50">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-6">
+                        <label for="lead-source">Lead Source</label>
+                        <select id="lead-source" required class="select-input">
+                            <option value="LinkedIn">LinkedIn</option>
+                            <option value="Google">Google (PPC)</option>
+                            <option value="Email">Email Marketing</option>
+                            <option value="Event">Events & Webinars</option>
+                            <option value="Content">Content Marketing</option>
+                            <option value="Referral">Referral</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-6">
+                        <label for="lead-assigned">Assigned To</label>
+                        <select id="lead-assigned" required class="select-input">
+                            <option value="Alex Mercer">Alex Mercer</option>
+                            <option value="Emma Watson">Emma Watson</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" id="btn-cancel-lead-modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Create Lead</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Lead Status Update Modal (A small quick-action modal or popover) -->
+    <div class="modal-backdrop" id="modal-update-status">
+        <div class="modal-card glass-card modal-sm">
+            <div class="modal-header">
+                <h3>Update Lead Status</h3>
+                <button class="btn-close" id="btn-close-status-modal">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Move <strong id="status-modal-lead-name">Lead</strong> to stage:</p>
+                <div class="status-buttons-grid">
+                    <button class="btn btn-status" data-status="New">New</button>
+                    <button class="btn btn-status" data-status="Contacted">Contacted</button>
+                    <button class="btn btn-status" data-status="Qualified">Qualified</button>
+                    <button class="btn btn-status" data-status="Proposal">Proposal</button>
+                    <button class="btn btn-status btn-won" data-status="Won">Won (Convert to Customer)</button>
+                    <button class="btn btn-status btn-lost" data-status="Lost">Lost</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script -->
+    <script src="/static/app.js"></script>
+</body>
+
+</html>

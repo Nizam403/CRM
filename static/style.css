@@ -1,0 +1,1755 @@
+/* ==========================================================================
+   AuraCRM - Design System & Stylesheet
+   ========================================================================== */
+
+/* --- Theme Variables --- */
+:root[data-theme="dark"] {
+    --bg-gradient: linear-gradient(135deg, #0f0c1b 0%, #15102a 50%, #090714 100%);
+    --glass-bg: rgba(22, 17, 43, 0.45);
+    --glass-border: rgba(255, 255, 255, 0.07);
+    --glass-highlight: rgba(255, 255, 255, 0.12);
+    --text-primary: #f3f1f9;
+    --text-secondary: #a5a1b8;
+    --text-muted: #6e6a85;
+    
+    --primary: #8b5cf6;
+    --primary-glow: rgba(139, 92, 246, 0.4);
+    --primary-hover: #a78bfa;
+    --secondary: #3b82f6;
+    --secondary-glow: rgba(59, 130, 246, 0.3);
+    
+    --success: #10b981;
+    --success-glow: rgba(16, 185, 129, 0.2);
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    --danger-glow: rgba(239, 68, 68, 0.2);
+    
+    --card-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    --sidebar-bg: rgba(13, 10, 28, 0.65);
+    --input-bg: rgba(255, 255, 255, 0.05);
+    --input-border: rgba(255, 255, 255, 0.1);
+    --input-focus: rgba(139, 92, 246, 0.5);
+    
+    --scrollbar-thumb: rgba(255, 255, 255, 0.1);
+    --scrollbar-track: transparent;
+}
+
+:root[data-theme="light"] {
+    --bg-gradient: linear-gradient(135deg, #f5f7fb 0%, #eef2f7 50%, #e4ebf5 100%);
+    --glass-bg: rgba(255, 255, 255, 0.65);
+    --glass-border: rgba(0, 0, 0, 0.06);
+    --glass-highlight: rgba(139, 92, 246, 0.08);
+    --text-primary: #1e1b29;
+    --text-secondary: #5c596e;
+    --text-muted: #8e8b9f;
+    
+    --primary: #7c3aed;
+    --primary-glow: rgba(124, 58, 237, 0.2);
+    --primary-hover: #6d28d9;
+    --secondary: #2563eb;
+    --secondary-glow: rgba(37, 99, 237, 0.15);
+    
+    --success: #059669;
+    --success-glow: rgba(5, 150, 105, 0.15);
+    --warning: #d97706;
+    --danger: #dc2626;
+    --danger-glow: rgba(220, 38, 38, 0.15);
+    
+    --card-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.06);
+    --sidebar-bg: rgba(255, 255, 255, 0.8);
+    --input-bg: rgba(0, 0, 0, 0.03);
+    --input-border: rgba(0, 0, 0, 0.08);
+    --input-focus: rgba(124, 58, 237, 0.4);
+    
+    --scrollbar-thumb: rgba(0, 0, 0, 0.15);
+    --scrollbar-track: transparent;
+}
+
+/* --- Fluid Scale ---
+   One place that decides how the shell breathes. Every value below is a
+   clamp(min, preferred, max): the max reproduces the original desktop design
+   exactly, the min keeps it legible on a small laptop, and the vw/vh middle
+   term scales smoothly between the two so nothing overflows the viewport. */
+:root {
+    --sidebar-w: clamp(196px, 15vw, 260px);
+
+    /* Sidebar rhythm scales with viewport HEIGHT so brand + 4 nav items +
+       footer always fit inside the window on short screens. */
+    --side-pad-y: clamp(0.85rem, 2.2vh, 2rem);
+    --side-pad-x: clamp(0.75rem, 1vw, 1.5rem);
+    --side-brand-gap: clamp(0.9rem, 3.5vh, 3rem);
+    --side-item-gap: clamp(0.25rem, 0.9vh, 0.75rem);
+    --side-link-pad: clamp(0.5rem, 1.2vh, 0.85rem);
+    --side-foot-gap: clamp(0.6rem, 1.7vh, 1.5rem);
+    --side-avatar: clamp(30px, 4.2vh, 40px);
+    --pad-x: clamp(1rem, 2.2vw, 2.5rem);
+    --pad-y: clamp(1rem, 1.8vh, 2rem);
+    --row-gap: clamp(0.9rem, 1.4vw, 1.5rem);
+    --section-gap: clamp(1.1rem, 1.8vw, 2rem);
+    --card-pad: clamp(0.9rem, 1.3vw, 1.5rem);
+    --chart-h: clamp(190px, 25vh, 290px);
+
+    --fs-h1: clamp(1.35rem, 0.9rem + 1vw, 2rem);
+    --fs-h3: clamp(0.95rem, 0.82rem + 0.35vw, 1.15rem);
+    --fs-stat: clamp(1.15rem, 0.95rem + 0.6vw, 1.75rem);
+}
+
+/* --- Base Reset --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    background: var(--bg-gradient);
+    color: var(--text-primary);
+    min-height: 100vh;
+    overflow-x: hidden;
+    transition: background 0.5s ease, color 0.3s ease;
+}
+
+/* --- Scrollbar --- */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
+}
+::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary);
+}
+
+/* --- App Layout --- */
+.app-container {
+    display: flex;
+    min-height: 100vh;
+    position: relative;
+}
+
+/* --- Sidebar Styles --- */
+.sidebar {
+    width: var(--sidebar-w);
+    background: var(--sidebar-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-right: 1px solid var(--glass-border);
+    padding: var(--side-pad-y) var(--side-pad-x);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    height: 100vh;
+    height: 100dvh;
+    /* Last-resort safety valve: if the window is shorter than even the
+       smallest clamp values allow, scroll inside the rail rather than
+       spilling the footer off-screen. */
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    z-index: 100;
+    transition: all 0.3s ease;
+}
+
+.sidebar-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: var(--side-brand-gap);
+    flex-shrink: 0;
+}
+
+.brand-icon {
+    width: clamp(30px, 4.2vh, 40px);
+    height: clamp(30px, 4.2vh, 40px);
+    flex-shrink: 0;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px var(--primary-glow);
+}
+
+.icon-brand {
+    color: #fff;
+    width: 22px;
+    height: 22px;
+}
+
+.brand-name {
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(1.1rem, 2.4vh, 1.5rem);
+    font-weight: 700;
+    white-space: nowrap;
+    background: linear-gradient(to right, var(--text-primary), var(--primary-hover));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.sidebar-nav {
+    flex-grow: 1;
+    min-height: 0;
+}
+
+.sidebar-nav ul {
+    list-style: none;
+}
+
+.sidebar-nav li {
+    margin-bottom: var(--side-item-gap);
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    gap: clamp(0.6rem, 1.4vh, 1rem);
+    padding: var(--side-link-pad) 1rem;
+    font-size: clamp(0.82rem, 1.8vh, 0.95rem);
+    white-space: nowrap;
+    color: var(--text-secondary);
+    text-decoration: none;
+    border-radius: 12px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.nav-link i {
+    width: clamp(17px, 2.4vh, 20px);
+    height: clamp(17px, 2.4vh, 20px);
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+}
+
+.nav-link:hover {
+    color: var(--text-primary);
+    background: var(--glass-highlight);
+}
+
+.nav-link:hover i {
+    transform: translateX(3px);
+}
+
+.nav-link.active {
+    color: #fff;
+    background: linear-gradient(135deg, var(--primary) 0%, rgba(139, 92, 246, 0.6) 100%);
+    box-shadow: 0 4px 20px var(--primary-glow);
+}
+
+.sidebar-footer {
+    border-top: 1px solid var(--glass-border);
+    padding-top: var(--side-foot-gap);
+    margin-top: var(--side-foot-gap);
+    display: flex;
+    flex-direction: column;
+    gap: var(--side-foot-gap);
+    flex-shrink: 0;
+}
+
+.theme-toggle-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.theme-label {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.theme-toggle-btn {
+    width: 48px;
+    height: 24px;
+    border-radius: 12px;
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    position: relative;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.toggle-slider {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--primary);
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+:root[data-theme="light"] .toggle-slider {
+    left: 26px;
+    background: var(--primary);
+}
+
+.user-profile-summary {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.user-avatar {
+    width: var(--side-avatar);
+    height: var(--side-avatar);
+    flex-shrink: 0;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--primary);
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-name {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.user-role {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+/* --- Main Content Layout --- */
+.main-content {
+    margin-left: var(--sidebar-w);
+    flex-grow: 1;
+    /* min-width:0 lets the column shrink below its widest child (wide tables)
+       instead of forcing the page to scroll sideways. */
+    min-width: 0;
+    padding: var(--pad-y) var(--pad-x);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    gap: var(--section-gap);
+}
+
+/* --- Header --- */
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.main-header h1 {
+    font-family: 'Outfit', sans-serif;
+    font-size: var(--fs-h1);
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.header-subtitle {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-top: 0.25rem;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.date-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1rem;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.date-badge i {
+    width: 16px;
+    height: 16px;
+}
+
+/* --- Glassmorphic Card Base --- */
+.glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    box-shadow: var(--card-shadow);
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.glass-card:hover {
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+/* --- Buttons --- */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.7rem 1.25rem;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary) 0%, #7c3aed 100%);
+    color: #fff;
+    box-shadow: 0 4px 15px var(--primary-glow);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(139, 92, 246, 0.6);
+}
+
+.btn-secondary {
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    color: var(--text-primary);
+}
+
+.btn-secondary:hover {
+    background: var(--glass-highlight);
+    border-color: var(--primary);
+}
+
+.btn-text {
+    background: transparent;
+    color: var(--primary-hover);
+    padding: 0.5rem;
+    font-size: 0.85rem;
+}
+
+.btn-text:hover {
+    color: var(--primary);
+}
+
+.btn-text i {
+    width: 14px;
+    height: 14px;
+    transition: transform 0.2s ease;
+}
+
+.btn-text:hover i {
+    transform: translateX(3px);
+}
+
+.btn-close {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    padding: 0.25rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.btn-close:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+}
+
+.btn-full {
+    width: 100%;
+}
+
+/* --- Stats Grid --- */
+.stats-grid {
+    display: grid;
+    /* auto-fit + minmax drops from 5 across to 4/3/2 on its own as the window
+       narrows, so the cards never squeeze past readability. */
+    grid-template-columns: repeat(auto-fit, minmax(clamp(150px, 12vw, 185px), 1fr));
+    gap: var(--row-gap);
+}
+
+.stat-card {
+    display: flex;
+    align-items: center;
+    gap: clamp(0.7rem, 1vw, 1.25rem);
+    padding: var(--card-pad);
+    min-width: 0;
+}
+
+.stat-icon-wrapper {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.stat-icon-wrapper i {
+    width: 24px;
+    height: 24px;
+    color: #fff;
+}
+
+.rev-icon {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    box-shadow: 0 4px 15px var(--success-glow);
+}
+
+.leads-icon {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    box-shadow: 0 4px 15px var(--secondary-glow);
+}
+
+.spend-icon {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+}
+
+.conv-icon {
+    background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
+    box-shadow: 0 4px 15px var(--primary-glow);
+}
+
+.roas-icon {
+    background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+    box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3);
+}
+
+/* ── Marketing analysis: threshold encoding ───────────────────────────── */
+
+/* ROAS is a return multiplier: below 1.00x the channel loses money. These
+   classes replace the previous blanket `color: var(--success)` that painted
+   every channel green regardless of performance. */
+.roas-strong { font-weight: 700; color: var(--success); }
+.roas-ok     { font-weight: 700; color: #f59e0b; }
+.roas-poor   { font-weight: 700; color: var(--danger); }
+.roas-unknown { font-weight: 700; color: var(--text-muted); }
+
+/* Budget pacing: flag channels close to, or past, their allocation. */
+.util-high { color: #f59e0b; font-weight: 600; }
+.util-over { color: var(--danger); font-weight: 700; }
+
+.dept-flag {
+    display: inline-block;
+    margin-left: 0.4rem;
+    padding: 0.1rem 0.4rem;
+    border-radius: 4px;
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    background: rgba(239, 68, 68, 0.15);
+    color: var(--danger);
+    vertical-align: middle;
+}
+
+.totals-row td {
+    border-top: 2px solid var(--glass-border);
+    font-weight: 700;
+}
+
+.table-note {
+    margin-top: 0.75rem;
+    font-size: 0.75rem;
+    line-height: 1.5;
+    color: var(--text-muted);
+}
+
+.table-note:empty { display: none; }
+
+.muted { color: var(--text-muted); }
+
+/* The `hidden` attribute must win over any display rule set by a class --
+   otherwise `.optimizer-panel { display: flex }` keeps the panel visible even
+   when the JS has marked it hidden. */
+[hidden] { display: none !important; }
+
+/* Budget pacing: spend rate measured against time elapsed, not just budget. */
+.pace-over  { color: var(--danger); font-weight: 700; }
+.pace-under { color: var(--secondary); font-weight: 600; }
+.pace-on    { color: var(--success); font-weight: 600; }
+
+/* ── Campaign engagement funnel bar ───────────────────────────────────── */
+
+.engagement-bar {
+    display: flex;
+    width: 110px;
+    height: 8px;
+    border-radius: 4px;
+    overflow: hidden;
+    background: var(--glass-border);
+}
+
+.engagement-seg {
+    display: block;
+    height: 100%;
+    min-width: 3px;
+}
+
+/* ── Budget optimizer ─────────────────────────────────────────────────── */
+
+.simulator-actions {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.simulator-actions .btn { flex: 1; justify-content: center; }
+
+.optimizer-panel {
+    margin-top: 1.25rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--glass-border);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.optimizer-headline {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.5rem;
+}
+
+.optimizer-headline-label {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.optimizer-headline-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.delta-up   { color: var(--success); font-weight: 600; }
+.delta-down { color: var(--danger); font-weight: 600; }
+
+.cap-flag {
+    background: rgba(245, 158, 11, 0.15);
+    color: #f59e0b;
+}
+
+#optimizer-table th,
+#optimizer-table td {
+    padding-left: 0.6rem;
+    padding-right: 0.6rem;
+    white-space: nowrap;
+}
+
+#campaigns-table th,
+#campaigns-table td {
+    padding-left: 0.6rem;
+    padding-right: 0.6rem;
+    white-space: nowrap;
+}
+
+.stat-data {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.stat-label {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.stat-value {
+    font-family: 'Outfit', sans-serif;
+    font-size: var(--fs-stat);
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.stat-trend {
+    font-size: 0.75rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.stat-trend i {
+    width: 12px;
+    height: 12px;
+}
+
+.trend-up {
+    color: var(--success);
+}
+
+.trend-down {
+    color: var(--danger);
+}
+
+/* --- Tab Navigation & Container --- */
+.tab-container {
+    flex-grow: 1;
+    position: relative;
+}
+
+.tab-content {
+    display: none;
+    animation: fadeIn 0.4s ease forwards;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --- Grid Utilities --- */
+.chart-row {
+    display: flex;
+    gap: var(--row-gap);
+    margin-bottom: var(--row-gap);
+}
+
+/* These are flex children in a gapped row, so a percentage `width` overflows:
+   66.66% + 33.33% already fills the line and the gap is added on top. Using
+   flex-basis with shrink enabled lets the pair absorb the gap instead, and
+   min-width:0 overrides the flex default that refuses to shrink below content. */
+.chart-row > [class*="col-"],
+.dashboard-row-bottom > [class*="col-"],
+.form-row > [class*="col-"] {
+    min-width: 0;
+}
+.col-8 { flex: 1 1 66.66%; }
+.col-7 { flex: 1 1 58.33%; }
+.col-6 { flex: 1 1 50%; }
+.col-5 { flex: 1 1 41.66%; }
+.col-4 { flex: 1 1 33.33%; }
+
+.chart-card {
+    padding: var(--card-pad);
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.card-header h3 {
+    font-family: 'Outfit', sans-serif;
+    font-size: var(--fs-h3);
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.card-subtitle {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    display: block;
+    margin-top: 0.15rem;
+}
+
+.chart-container {
+    position: relative;
+    /* vh-based so a full page of charts fits the window without scrolling;
+       every chart already sets maintainAspectRatio:false. */
+    height: var(--chart-h);
+    width: 100%;
+    min-width: 0;
+}
+
+/* --- Dashboard Bottom Row --- */
+.dashboard-row-bottom {
+    display: flex;
+    gap: var(--row-gap);
+}
+
+.table-card {
+    padding: var(--card-pad);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    min-width: 0;
+}
+
+.table-responsive {
+    overflow-x: auto;
+    width: 100%;
+    min-width: 0;
+    /* Keep the horizontal scrollbar visible so it is discoverable that the
+       metric columns continue past the edge. */
+    scrollbar-width: thin;
+}
+.table-responsive::-webkit-scrollbar {
+    height: 8px;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.data-table th {
+    padding: 0.75rem 1rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--glass-border);
+    letter-spacing: 0.5px;
+}
+
+.data-table td {
+    padding: 1rem;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.data-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.data-table tbody tr:hover td {
+    background: rgba(255, 255, 255, 0.01);
+    color: var(--text-primary);
+}
+
+/* --- Badges & Statuses --- */
+.badge {
+    padding: 0.25rem 0.6rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.status-active {
+    background: rgba(16, 185, 129, 0.15);
+    color: var(--success);
+}
+
+.status-inactive {
+    background: rgba(239, 68, 68, 0.15);
+    color: var(--danger);
+}
+
+.lead-status-badge {
+    padding: 0.25rem 0.5rem;
+    border-radius: 6px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.status-new { background: rgba(59, 130, 246, 0.15); color: #3b82f6; }
+.status-contacted { background: rgba(245, 158, 11, 0.15); color: #f59e0b; }
+.status-qualified { background: rgba(139, 92, 246, 0.15); color: #8b5cf6; }
+.status-proposal { background: rgba(236, 72, 153, 0.15); color: #ec4899; }
+.status-won { background: rgba(16, 185, 129, 0.15); color: #10b981; }
+.status-lost { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
+
+/* --- Customer 360 Layout --- */
+.customer360-layout {
+    display: flex;
+    gap: var(--row-gap);
+    height: calc(100vh - var(--pad-y) * 2 - clamp(90px, 12vh, 120px));
+    min-height: 420px;
+}
+
+.customer-list-panel {
+    width: clamp(240px, 22vw, 320px);
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.panel-header {
+    padding: 1.25rem;
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    border-radius: 10px;
+    padding: 0.6rem 0.85rem;
+    transition: border-color 0.3s ease;
+}
+
+.search-box:focus-within {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--primary-glow);
+}
+
+.search-box i {
+    width: 16px;
+    height: 16px;
+    color: var(--text-muted);
+}
+
+.search-box input {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text-primary);
+    font-size: 0.85rem;
+    width: 100%;
+}
+
+.customer-list {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.customer-item-card {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.85rem;
+    border-radius: 12px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: all 0.25s ease;
+}
+
+.customer-item-card:hover {
+    background: var(--glass-highlight);
+    border-color: var(--glass-border);
+}
+
+.customer-item-card.active {
+    background: var(--glass-highlight);
+    border-color: var(--primary);
+    box-shadow: 0 4px 15px rgba(139, 92, 246, 0.1);
+}
+
+.customer-item-avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.customer-item-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    flex-grow: 1;
+    overflow: hidden;
+}
+
+.customer-item-name {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.customer-item-company {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.customer-item-ltv {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--primary-hover);
+}
+
+/* --- Customer Detail Panel --- */
+.customer-detail-panel {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding: 1.5rem;
+}
+
+.empty-detail-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: var(--text-muted);
+    gap: 1rem;
+    text-align: center;
+}
+
+.large-icon {
+    width: 64px;
+    height: 64px;
+    stroke-width: 1;
+    color: var(--text-muted);
+}
+
+.customer-detail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 1px solid var(--glass-border);
+    padding-bottom: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.customer-profile-card {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+}
+
+.customer-profile-avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--primary);
+}
+
+.customer-profile-meta h2 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.customer-profile-meta p {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.customer-metrics-row {
+    display: flex;
+    gap: 2rem;
+}
+
+.metric-box {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    text-align: right;
+}
+
+.metric-box-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+}
+
+.metric-box-value {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.metric-box-value.highlight {
+    color: var(--success);
+}
+
+/* --- Customer 360 Grid --- */
+.customer-360-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    flex-grow: 1;
+    overflow-y: auto;
+    padding-right: 0.5rem;
+}
+
+.detail-section-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    border-radius: 12px;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.detail-section-card h4 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding-bottom: 0.5rem;
+    color: var(--text-primary);
+}
+
+/* --- Timeline --- */
+.timeline {
+    position: relative;
+    padding-left: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 4px;
+    top: 5px;
+    bottom: 5px;
+    width: 2px;
+    background: var(--glass-border);
+}
+
+.timeline-item {
+    position: relative;
+}
+
+.timeline-dot {
+    position: absolute;
+    left: -22px;
+    top: 4px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--text-muted);
+    border: 2px solid var(--bg-gradient);
+}
+
+.timeline-item.Email .timeline-dot { background: var(--secondary); }
+.timeline-item.Meeting .timeline-dot { background: var(--primary); }
+.timeline-item.Purchase .timeline-dot { background: var(--success); }
+.timeline-item.Support .timeline-dot { background: var(--danger); }
+
+.timeline-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+}
+
+.timeline-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.timeline-title {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.timeline-date {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+}
+
+.timeline-desc {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+/* --- Campaign List --- */
+.campaign-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.campaign-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.01);
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.02);
+}
+
+.campaign-name {
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+/* --- Leads Kanban Board --- */
+.leads-pipeline-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.pipeline-filters {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.filter-label {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.select-input {
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    color: var(--text-primary);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    outline: none;
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+
+.select-input option {
+    background: #15102a;
+    color: #fff;
+}
+
+.kanban-board {
+    display: grid;
+    /* minmax(0,1fr) lets the six stages actually divide the space available.
+       Plain 1fr floors each track at its content width, which combined with
+       the old min-width:200px forced the board 250px past the viewport and
+       body{overflow-x:hidden} silently clipped the "Lost" column. */
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: clamp(0.45rem, 0.7vw, 1rem);
+    overflow-x: auto;
+    padding-bottom: 1rem;
+    min-height: clamp(360px, calc(100vh - 260px), 900px);
+}
+
+.kanban-column {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    padding: clamp(0.5rem, 0.7vw, 1rem);
+    display: flex;
+    flex-direction: column;
+    gap: clamp(0.5rem, 0.7vw, 1rem);
+    min-width: 0;
+}
+
+.column-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding-bottom: 0.5rem;
+}
+
+.column-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.column-count {
+    background: var(--input-bg);
+    color: var(--text-secondary);
+}
+
+.column-won {
+    border-color: rgba(16, 185, 129, 0.2);
+    background: rgba(16, 185, 129, 0.01);
+}
+
+.column-lost {
+    border-color: rgba(239, 68, 68, 0.2);
+    background: rgba(239, 68, 68, 0.01);
+}
+
+.kanban-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    flex-grow: 1;
+    min-height: 150px;
+}
+
+.kanban-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 10px;
+    padding: 0.85rem;
+    cursor: grab;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.kanban-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--primary);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.25);
+}
+
+.kanban-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.lead-company {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.lead-score-badge {
+    flex-shrink: 0;
+    white-space: nowrap;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+}
+
+.score-high { background: rgba(16, 185, 129, 0.15); color: var(--success); }
+.score-medium { background: rgba(245, 158, 11, 0.15); color: var(--warning); }
+.score-low { background: rgba(239, 68, 68, 0.15); color: var(--danger); }
+
+.lead-name {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.lead-value {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--primary-hover);
+}
+
+.kanban-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.03);
+    padding-top: 0.5rem;
+    margin-top: 0.25rem;
+}
+
+.lead-source-tag {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.lead-source-tag i {
+    width: 10px;
+    height: 10px;
+}
+
+.lead-assignee {
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    background: var(--input-bg);
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+}
+
+/* --- Marketing Spends Tab --- */
+.spends-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* Stacked rather than side-by-side: the channel performance table now carries
+   11 derived columns and needs the full width to stay readable. */
+.spends-bottom-row {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.spends-bottom-row > .col-7,
+.spends-bottom-row > .col-5 {
+    /* Column direction: flex-basis would size HEIGHT, so reset the shorthand
+       and let each card take the full width of the stack. */
+    flex: none;
+    width: 100%;
+    min-width: 0;
+}
+
+/* Denser cells so the full metric set fits without horizontal scrolling. */
+#spends-table-tbody td,
+#spends-table-tfoot td,
+.spends-layout .data-table th {
+    padding-left: 0.6rem;
+    padding-right: 0.6rem;
+    white-space: nowrap;
+}
+
+/* --- Simulator Card --- */
+.simulator-card {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.simulator-body {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* Grid rather than a single column, so the sliders stay compact now that the
+   simulator card spans the full width of the page. */
+.simulator-sliders {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem 1.5rem;
+}
+
+.slider-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.slider-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.slider-name {
+    color: var(--text-primary);
+}
+
+.slider-val {
+    color: var(--primary-hover);
+    font-weight: 600;
+}
+
+.range-input {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 6px;
+    border-radius: 3px;
+    background: var(--input-bg);
+    outline: none;
+    transition: background 0.3s ease;
+}
+
+.range-input::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--primary);
+    cursor: pointer;
+    box-shadow: 0 0 10px var(--primary-glow);
+    transition: transform 0.1s ease;
+}
+
+.range-input::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+}
+
+.simulator-results {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.sim-result-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sim-result-label {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.sim-result-value {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.sim-result-item.highlight .sim-result-value {
+    color: var(--secondary);
+    font-size: 1.25rem;
+}
+
+.sim-result-item.highlight-alt .sim-result-value {
+    color: var(--success);
+    font-size: 1.25rem;
+}
+
+/* --- Modals & Dialogs --- */
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(10, 8, 20, 0.7);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.modal-backdrop.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modal-card {
+    width: 500px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    transform: scale(0.9);
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.modal-backdrop.active .modal-card {
+    transform: scale(1);
+}
+
+.modal-sm {
+    width: 360px;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h2, .modal-header h3 {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+}
+
+.modal-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.form-group label {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+.form-group input {
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    color: var(--text-primary);
+    padding: 0.7rem 1rem;
+    border-radius: 10px;
+    outline: none;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--primary-glow);
+}
+
+.form-row {
+    display: flex;
+    gap: 1rem;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+}
+
+.status-buttons-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.btn-status {
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    color: var(--text-primary);
+    justify-content: flex-start;
+    padding: 0.6rem 1rem;
+    font-size: 0.85rem;
+}
+
+.btn-status:hover {
+    background: var(--glass-highlight);
+    border-color: var(--primary);
+}
+
+.btn-status.btn-won:hover {
+    border-color: var(--success);
+    background: rgba(16, 185, 129, 0.1);
+}
+
+.btn-status.btn-lost:hover {
+    border-color: var(--danger);
+    background: rgba(239, 68, 68, 0.1);
+}
+
+/* --- Responsive Layouts --- */
+@media (max-width: 1080px) {
+    .kanban-board {
+        grid-template-columns: none;
+        grid-auto-flow: column;
+        grid-auto-columns: 200px;
+    }
+}
+
+@media (max-width: 1200px) {
+    .stats-grid {
+        /* Keep flowing by width rather than snapping straight to 2 columns,
+           so 1199px does not look wildly different from 1201px. */
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    }
+    .chart-row, .dashboard-row-bottom, .spends-bottom-row {
+        flex-direction: column;
+    }
+    .col-8, .col-7, .col-6, .col-5, .col-4 {
+        flex: none;
+        width: 100%;
+    }
+    .customer360-layout {
+        flex-direction: column;
+        height: auto;
+    }
+    .customer-list-panel {
+        width: 100%;
+        height: 300px;
+    }
+}
+
+@media (max-width: 560px) {
+    .form-row {
+        flex-direction: column;
+    }
+    .form-row > [class*="col-"] {
+        flex: none;
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    :root {
+        --sidebar-w: 70px;
+    }
+    .sidebar {
+        padding: var(--side-pad-y) 0.5rem;
+    }
+    .brand-name, .sidebar-nav span, .theme-label, .user-info {
+        display: none;
+    }
+    .sidebar-brand {
+        justify-content: center;
+    }
+    .nav-link {
+        justify-content: center;
+        padding: 0.85rem;
+    }
+    .main-content {
+        padding: 1.25rem 1rem;
+    }
+    .stats-grid {
+        grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
+    }
+    .main-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    .header-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+}
+
+.lead-phone {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-top: 0.25rem;
+    margin-bottom: 0.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
